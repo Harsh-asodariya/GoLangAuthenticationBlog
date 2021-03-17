@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
 import './App.css';
+import SignIn from './Component/signIn';
+import SignUp from './Component/signUp';
+import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
+import Dashboard from './Container/DashBoard/dashboard'
 
 function App() {
+  useEffect(() => {
+    
+  },[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Router>
+          <Switch>
+          <Route path='/' exact component={SignIn}/>
+          <Route path='/signUp' component={SignUp}/>
+          
+          <Route path='/dashboard/:type' component={Dashboard} />
+          </Switch>
+        </Router>
     </div>
   );
 }

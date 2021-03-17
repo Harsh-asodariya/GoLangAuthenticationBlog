@@ -3,11 +3,33 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider, createMuiTheme  } from '@material-ui/core/styles';
+import axios from 'axios'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main:'#f58220'
+    },
+    secondary:{
+      main:'#ffffff'
+    }
+  },
+  overrides: {
+    MuiButton: {
+      label: {
+        color: "#ffffff",
+      },
+    },
+  }
+});
+
+axios.defaults.baseURL = "http://63ef37bf6f74.ngrok.io";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>,
   document.getElementById('root')
 );
 
