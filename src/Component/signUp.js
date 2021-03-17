@@ -108,7 +108,6 @@ export default function SignUp() {
                     alert(res.data.message);
                 }
                 else {
-                    alert("signup successfully");
                     history.push('/')
                 }
             }).catch(err =>

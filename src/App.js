@@ -4,6 +4,7 @@ import SignIn from './Component/signIn';
 import SignUp from './Component/signUp';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
 import Dashboard from './Container/DashBoard/dashboard'
+import AuthRoute from './Authguard/authguard'
 
 function App() {
   useEffect(() => {
@@ -15,8 +16,7 @@ function App() {
           <Switch>
           <Route path='/' exact component={SignIn}/>
           <Route path='/signUp' component={SignUp}/>
-          
-          <Route path='/dashboard/:type' component={Dashboard} />
+          <AuthRoute path='/dashboard/:type' component={Dashboard} />
           </Switch>
         </Router>
     </div>

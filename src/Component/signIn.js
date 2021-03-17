@@ -82,7 +82,6 @@ export default function SignIn() {
           alert(res.data.message);
         }
         else {
-          alert("signin successfully");
           localStorage.setItem('token',res.data.token);
           history.push(`/dashboard/${res.data.role}`)
         }
