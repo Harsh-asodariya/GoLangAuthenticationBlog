@@ -184,7 +184,6 @@ export default function SignUp() {
                                         error={validation.role.touched && !validation.role.valid}
 
                                     >
-                                        <MenuItem value='superadmin'>Super Admin</MenuItem>
                                         <MenuItem value='admin'>Admin</MenuItem>
                                         <MenuItem value='user'>User</MenuItem>
                                     </Select>
