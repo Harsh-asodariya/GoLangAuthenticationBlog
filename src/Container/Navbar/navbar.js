@@ -32,6 +32,7 @@ const Navbar = (props) => {
 const handleLogout=()=>{
     history.push('/');
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
 }
   return (
       <>

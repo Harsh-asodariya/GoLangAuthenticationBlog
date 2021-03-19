@@ -2,16 +2,15 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
 const AuthRoute = (props) => {
-  let token=localStorage.getItem('token');  
-  console.log(token);
+  let token=localStorage.getItem('token');
   return (
     <Route
       path={props.path}
-      render={(data) =>
+      render={() =>
          token!==null ? (
           <props.component></props.component>
         ) : (
-          alert("Please Logged in First"),
+          alert("Please Login First"),
           <Redirect to={{ pathname: "/" }}></Redirect>
         )
       }

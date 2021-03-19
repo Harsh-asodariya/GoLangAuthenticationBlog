@@ -14,8 +14,8 @@ import Select from '@material-ui/core/Select';
 import Logo from '../Assets/BacancyLogo.png';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom'
-import {regex_email,regex_nonempty,regex_password} from '../Shared/Regex/validateRegex'
+import { useHistory } from 'react-router-dom'
+import {validationHandler} from '../Validation/validation';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -80,23 +80,9 @@ export default function SignUp() {
     }, [validation])
 
     const handleChange = (event) => {
-        let isValid
-        if (event.target.name === 'name') {
-            isValid = regex_nonempty.test(event.target.value);
-            setValidation({ ...validation, name: { touched: true, valid: isValid } })
-        }
-        else if (event.target.name === 'role') {
-            isValid = regex_nonempty.test(event.target.value);
-            setValidation({ ...validation, role: { touched: true, valid: isValid } })
-        }
-        else if (event.target.name === 'email') {
-            isValid = regex_email.test(event.target.value);
-            setValidation({ ...validation, email: { touched: true, valid: isValid } })
-        }
-        else if (event.target.name === 'password') {
-            isValid = regex_password.test(event.target.value);
-            setValidation({ ...validation, password: { touched: true, valid: isValid } })
-        }
+        let isValid = validationHandler(event.target.name, event.target.value)
+        setValidation({ ...validation, [event.target.name]: { touched: true, valid: isValid } })
+
         setUserDetail({ ...userDetail, [event.target.name]: event.target.value })
     };
 
@@ -117,99 +103,99 @@ export default function SignUp() {
     return (
 
         <Container component="main" maxWidth="xs">
-            
-                <div className={classes.paper}>
-                    
-                    <Avatar style={{ width: '20%', height: '20%', marginBottom: '5%' }} src={Logo}>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign up
-        </Typography>
-                    <form className={classes.form} onSubmit={onSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    id="name"
-                                    label="Name"
-                                    name="name"
-                                    autoComplete="name"
-                                    value={userDetail.name}
-                                    onChange={handleChange}
-                                    error={validation.name.touched && !validation.name.valid}
-                                    helperText='required'
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    value={userDetail.email}
-                                    onChange={handleChange}
-                                    error={validation.email.touched && !validation.email.valid}
-                                    helperText='eg abc@xyz.com'
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                    value={userDetail.password}
-                                    onChange={handleChange}
-                                    error={validation.password.touched && !validation.password.valid}
-                                    helperText='3-7 charecters'
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControl variant="outlined" className={classes.formControl}
-                                    fullWidth>
-                                    <InputLabel id="demo-simple-select-outlined-label">Role</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-outlined-label"
-                                        id="demo-simple-select-outlined"
-                                        value={userDetail.role}
-                                        onChange={handleChange}
-                                        label="Role"
-                                        name="role"
-                                        error={validation.role.touched && !validation.role.valid}
 
-                                    >
-                                        <MenuItem value='admin'>Admin</MenuItem>
-                                        <MenuItem value='user'>User</MenuItem>
-                                    </Select>
-                                    <FormHelperText>required</FormHelperText>
-                                </FormControl>
-                            </Grid>
+            <div className={classes.paper}>
+
+                <Avatar style={{ width: '20%', height: '20%', marginBottom: '5%' }} src={Logo}>
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Sign up
+        </Typography>
+                <form className={classes.form} onSubmit={onSubmit}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                fullWidth
+                                id="name"
+                                label="Name"
+                                name="name"
+                                autoComplete="name"
+                                value={userDetail.name}
+                                onChange={handleChange}
+                                error={validation.name.touched && !validation.name.valid}
+                                helperText='required'
+                            />
                         </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            disabled={!isFormValid}
-                        >
-                            Sign Up
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                value={userDetail.email}
+                                onChange={handleChange}
+                                error={validation.email.touched && !validation.email.valid}
+                                helperText='eg abc@xyz.com'
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                value={userDetail.password}
+                                onChange={handleChange}
+                                error={validation.password.touched && !validation.password.valid}
+                                helperText='3-7 charecters'
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControl variant="outlined" className={classes.formControl}
+                                fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Role</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={userDetail.role}
+                                    onChange={handleChange}
+                                    label="Role"
+                                    name="role"
+                                    error={validation.role.touched && !validation.role.valid}
+
+                                >
+                                    <MenuItem value='admin'>Admin</MenuItem>
+                                    <MenuItem value='user'>User</MenuItem>
+                                </Select>
+                                <FormHelperText>required</FormHelperText>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        disabled={!isFormValid}
+                    >
+                        Sign Up
           </Button>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <Link to='/' style={{ color: '#f58220' }}>
-                                    Already have an account? Sign in
+                    <Grid container justify="flex-end">
+                        <Grid item>
+                            <Link to='/' style={{ color: '#f58220' }}>
+                                Already have an account? Sign in
               </Link>
-                            </Grid>
                         </Grid>
-                    </form>
-                </div>
+                    </Grid>
+                </form>
+            </div>
         </Container>
 
     );

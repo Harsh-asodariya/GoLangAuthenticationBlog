@@ -10,7 +10,7 @@ import Container from '@material-ui/core/Container';
 import Logo from '../Assets/BacancyLogo.png';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
-import {regex_email,regex_nonempty} from '../Shared/Regex/validateRegex'
+import {validationHandler} from '../Validation/validation';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -53,6 +53,12 @@ export default function SignIn() {
     }
   })
 
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      history.push(`/dashboard`)
+    }
+  })
+
   useEffect(() => {
     let valid = true
     for (let field in validation) {
@@ -62,14 +68,8 @@ export default function SignIn() {
   }, [validation])
 
   const handleChange = (event) => {
-    let isValid
-    if (event.target.name === 'email') {
-      isValid = regex_email.test(event.target.value);
-      setValidation({ ...validation, email: { touched: true, valid: isValid } })
-    } else if (event.target.name === 'password') {
-      isValid = regex_nonempty.test(event.target.value);
-      setValidation({ ...validation, password: { touched: true, valid: isValid } })
-    };
+    let isValid = validationHandler(event.target.name,event.target.value)
+    setValidation({...validation, [event.target.name]:{ touched: true, valid: isValid } })
 
     setUserDetail({ ...userDetail, [event.target.name]: event.target.value })
   }
@@ -83,7 +83,8 @@ export default function SignIn() {
         }
         else {
           localStorage.setItem('token',res.data.token);
-          history.push(`/dashboard/${res.data.role}`)
+          localStorage.setItem('role',res.data.role)
+          history.push(`/dashboard`)
         }
       }).catch(err =>
         console.log(err)
